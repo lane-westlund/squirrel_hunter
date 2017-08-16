@@ -1,3 +1,14 @@
+# This file has two main purposes
+# 1) To be run on a raspberry pi long term to gather
+#    test images to the output_dir.  The goal is simply
+#    to look for motion, save the image, and sort them
+#    later for feeding into a machine learning system
+#
+# 2) To serve as a debug platform to evaluate various
+#    motion capture and/or machine learning algorithms
+#
+# It is still somewhat crude...
+
 import numpy as np
 import cv2
 import time
