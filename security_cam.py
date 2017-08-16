@@ -4,6 +4,12 @@ import time
 import imutils
 import datetime
 import os
+import argparse
+
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-v", "--video", help="path to video")
+args = vars(ap.parse_args())
 
 pi = False
 if os.uname()[1] == "raspberrypi":
@@ -19,7 +25,10 @@ if pi == True:
     stream = PiRGBArray(camera)
     #rawCapture = PiRGBArray(camera, size=(640, 480))
 else:
-    camera = cv2.VideoCapture(0)
+    if args.get("video", None) is None:
+        camera = cv2.VideoCapture(0)
+    else:
+        camera = cv2.VideoCapture(args["video"])
 
 
 # let the camera warm up
