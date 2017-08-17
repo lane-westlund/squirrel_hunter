@@ -38,12 +38,13 @@ if pi == True:
 else:
     if args.get("video", None) is None:
         camera = cv2.VideoCapture(0)
+        # let the camera warm up
+        time.sleep(2)
     else:
         camera = cv2.VideoCapture(args["video"])
 
 
-# let the camera warm up
-time.sleep(2)
+
 
 #fgbg = cv2.bgsegm.createBackgroundSubtractorGMG()
 #fgbg = cv2.bgsegm.createBackgroundSubtractorCNT()
