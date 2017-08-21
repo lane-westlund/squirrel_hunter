@@ -85,8 +85,8 @@ while True:
 
     #sizing stuff
     frame = imutils.resize(frame_orrig, width=(500))
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    gray = cv2.GaussianBlur(gray, (21,21), 0)
+    #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    #gray = cv2.GaussianBlur(gray, (21,21), 0)
 
     fgmask = fgbg.apply(frame)
 
