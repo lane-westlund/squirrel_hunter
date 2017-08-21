@@ -57,7 +57,20 @@ try:
 except OSError:
     pass
 
+mark_time = datetime.datetime.now()
+frame_number = 0
+frame_writes = 0
+
 while True:
+
+    if (datetime.datetime.now() - mark_time).seconds >= 10:
+        fps = frame_number / ((datetime.datetime.now() - mark_time).seconds)
+        print("frames per second: " + str(fps) + " writes: " + str(frame_writes))
+        mark_time = datetime.datetime.now()
+        frame_number = 0
+        frame_writes = 0
+
+    frame_number = frame_number + 1
 
     if pi == True:
         camera.capture(stream, format='bgr')
@@ -100,6 +113,7 @@ while True:
         dt = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
         cv2.imwrite('output_dir/'+dt+'_hint.png', frame)
         cv2.imwrite('output_dir/'+dt+'_full.png', frame_orrig)
+        frame_writes = frame_writes + 1
     key = cv2.waitKey(1) & 0xFF
 
     if key == ord("q"):
