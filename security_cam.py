@@ -81,7 +81,7 @@ while True:
     #cv2.imshow('mask', fgmask)
     #cv2.imshow('frame', frame)
     if(movement_detected == True):
-        dt = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+        dt = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S_%f")
         cv2.imwrite('output_dir/'+dt+'_hint.png', frame)
         cv2.imwrite('output_dir/'+dt+'_full.png', frame_orrig)
         frame_writes = frame_writes + 1
