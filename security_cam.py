@@ -16,35 +16,15 @@ import imutils
 import datetime
 import os
 import argparse
+from CameraStream import CameraStream
 
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-v", "--video", help="path to video")
 args = vars(ap.parse_args())
 
-pi = False
-if os.uname()[1] == "raspberrypi":
-    from picamera.array import PiRGBArray
-    from picamera import PiCamera
-    pi = True
-
-if pi == True:
-    camera = PiCamera()
-    camera.resolution = (1024, 768)
-    camera.start_preview()
-    time.sleep(2)
-    stream = PiRGBArray(camera)
-    #rawCapture = PiRGBArray(camera, size=(640, 480))
-else:
-    if args.get("video", None) is None:
-        camera = cv2.VideoCapture(0)
-        # let the camera warm up
-        time.sleep(2)
-    else:
-        camera = cv2.VideoCapture(args["video"])
-
-
-
+cam = CameraStream().start()
+time.sleep(2.0)
 
 #fgbg = cv2.bgsegm.createBackgroundSubtractorGMG()
 #fgbg = cv2.bgsegm.createBackgroundSubtractorCNT()
@@ -72,16 +52,7 @@ while True:
 
     frame_number = frame_number + 1
 
-    if pi == True:
-        camera.capture(stream, format='bgr')
-        frame_orrig = stream.array
-        grabbed = True
-    else:
-        (grabbed, frame_orrig) = camera.read()
-
-    # if we didn't read
-    if not grabbed:
-        break;
+    frame_orrig = cam.read()
 
     #sizing stuff
     frame = imutils.resize(frame_orrig, width=(500))
@@ -107,8 +78,8 @@ while True:
         movement_detected = True
         cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 255, 0), 2 )
 
-   # cv2.imshow('mask', fgmask)
-   # cv2.imshow('frame', frame)
+    #cv2.imshow('mask', fgmask)
+    #cv2.imshow('frame', frame)
     if(movement_detected == True):
         dt = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
         cv2.imwrite('output_dir/'+dt+'_hint.png', frame)
@@ -119,9 +90,6 @@ while True:
     if key == ord("q"):
         break
 
-    if pi == True:
-        stream.truncate(0)
-
-camera.release()
+cam.stop()
 cv2.destroyAllWindows()
 
