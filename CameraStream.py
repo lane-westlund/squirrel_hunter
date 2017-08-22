@@ -30,7 +30,7 @@ class CameraStream:
     def update(self):
         if self.pi == True:
             for f in self.stream:
-                self.frame = frame.array
+                self.frame = f.array
                 self.rawCapture.truncate(0)
 
                 if self.stopped:
