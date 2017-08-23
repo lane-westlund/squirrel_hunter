@@ -1,0 +1,7 @@
+{
+  "show_video": false,
+  "show_motion_mask": false,
+  "save_capture_files": true,
+  "resolution": [1024, 768],
+  "resize_width": 500
+}

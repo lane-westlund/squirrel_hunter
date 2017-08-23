@@ -17,13 +17,16 @@ import datetime
 import os
 import argparse
 from CameraStream import CameraStream
+import json
 
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-v", "--video", help="path to video")
 args = vars(ap.parse_args())
 
-cam = CameraStream().start()
+conf = json.load(open("conf.json"))
+
+cam = CameraStream(resolution=tuple(conf["resolution"])).start()
 time.sleep(2.0)
 
 #fgbg = cv2.bgsegm.createBackgroundSubtractorGMG()
@@ -32,10 +35,11 @@ fgbg = cv2.bgsegm.createBackgroundSubtractorMOG()
 
 movement_detected = False
 
-try:
-    os.makedirs('output_dir')
-except OSError:
-    pass
+if conf["save_capture_files"]:
+    try:
+        os.makedirs('output_dir')
+    except OSError:
+        pass
 
 mark_time = datetime.datetime.now()
 frame_number = 0
@@ -55,7 +59,7 @@ while True:
     frame_orrig = cam.read()
 
     #sizing stuff
-    frame = imutils.resize(frame_orrig, width=(500))
+    frame = imutils.resize(frame_orrig, width=(conf["resize_width"]))
     #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     #gray = cv2.GaussianBlur(gray, (21,21), 0)
 
@@ -78,9 +82,11 @@ while True:
         movement_detected = True
         cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 255, 0), 2 )
 
-    #cv2.imshow('mask', fgmask)
-    #cv2.imshow('frame', frame)
-    if(movement_detected == True):
+    if conf["show_video"]:
+        cv2.imshow('frame', frame)
+    if conf["show_motion_mask"]:
+        cv2.imshow('mask', fgmask)
+    if((movement_detected == True) and (conf["save_capture_files"])):
         dt = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S_%f")
         cv2.imwrite('output_dir/'+dt+'_hint.png', frame)
         cv2.imwrite('output_dir/'+dt+'_full.png', frame_orrig)

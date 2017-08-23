@@ -1,3 +1,4 @@
 output_dir/
 test_data/
 *.pyc
+conf.json
