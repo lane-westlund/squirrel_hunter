@@ -60,6 +60,7 @@ while True:
 
     #sizing stuff
     frame = imutils.resize(frame_orrig, width=(conf["resize_width"]))
+
     #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     #gray = cv2.GaussianBlur(gray, (21,21), 0)
 
@@ -73,14 +74,22 @@ while True:
 
     #loop over the contours
     movement_detected = False
-
+    biggest_area = 0
+    height, width, channels = frame.shape
     for c in cnts:
-        if cv2.contourArea(c) < 500:
+        if cv2.contourArea(c) < (conf["movement_ratio"]*height*width):
             continue
-
+        if cv2.contourArea(c) > biggest_area:
+                biggest_area = cv2.contourArea(c)
         (x, y, w, h) = cv2.boundingRect(c)
         movement_detected = True
         cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 255, 0), 2 )
+
+
+    if movement_detected:
+        biggest_ratio = (float(biggest_area) / (height * width))
+        cv2.putText(frame, "biggest:" + str(biggest_area) + " R: " + str(biggest_ratio), (10, 20),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
     if conf["show_video"]:
         cv2.imshow('frame', frame)

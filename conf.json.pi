@@ -3,5 +3,6 @@
   "show_motion_mask": false,
   "save_capture_files": true,
   "resolution": [1024, 768],
-  "resize_width": 500
+  "resize_width": 500,
+  "movement_ratio": 0.002666667
 }
