@@ -5,5 +5,7 @@
   "resolution": [1024, 768],
   "resize_width": 500,
   "movement_ratio_min": 0.002666667,
-  "movement_ratio_max": 0.01
+  "movement_ratio_max": 0.01,
+  "start_hour": 0,
+  "stop_hour": 24
 }

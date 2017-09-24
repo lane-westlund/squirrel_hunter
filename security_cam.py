@@ -58,6 +58,11 @@ while True:
 
     frame_orrig = cam.read()
 
+    if( datetime.datetime.now().hour < conf["start_hour"]):
+        continue
+    elif( datetime.datetime.now().hour >= conf["stop_hour"]):
+        continue
+
     #sizing stuff
     frame = imutils.resize(frame_orrig, width=(conf["resize_width"]))
 
