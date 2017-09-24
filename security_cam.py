@@ -77,7 +77,9 @@ while True:
     biggest_area = 0
     height, width, channels = frame.shape
     for c in cnts:
-        if cv2.contourArea(c) < (conf["movement_ratio"]*height*width):
+        if cv2.contourArea(c) < (conf["movement_ratio_min"]*height*width):
+            continue
+        if cv2.contourArea(c) > (conf["movement_ratio_max"] * height * width):
             continue
         if cv2.contourArea(c) > biggest_area:
                 biggest_area = cv2.contourArea(c)
