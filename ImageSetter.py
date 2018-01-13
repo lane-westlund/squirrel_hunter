@@ -77,7 +77,13 @@ for current_file in os.listdir(args.dir):
             if (key == ord('s') or key == ord('k')):
                 #s == save k == sKip
                 if(key == ord('s')):
-                    cv2.imwrite(output_dir + "/" + current_file, roi)
+                    new_file_name = os.path.splitext(current_file)[0]
+                    new_file_name += "-" + str(top_x)
+                    new_file_name += "-" + str(top_y)
+                    new_file_name += "-" + str(bot_x)
+                    new_file_name += "-" + str(bot_y)
+                    new_file_name += os.path.splitext(current_file)[1]
+                    cv2.imwrite(output_dir + "/" + new_file_name, roi)
                     file_data["top_x"] = top_x
                     file_data["top_y"] = top_y
                     file_data["bot_x"] = bot_x
