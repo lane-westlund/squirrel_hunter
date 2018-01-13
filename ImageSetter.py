@@ -94,27 +94,3 @@ for current_file in os.listdir(args.dir):
                 quit()
 
             cv2.destroyWindow("ROI")
-
-
-#input_files = os.listdir(args.dir)
-#current_image = cv2.imread( args.dir + input_files[0], cv2.IMREAD_COLOR)
-#clone = current_image.copy()
-
-#cv2.imshow("image", current_image)
-#key = cv2.waitKey(0)
-
-#if len(refPt) == 2:
-#    roi = clone[refPt[0][1]:refPt[1][1], refPt[0][0]:refPt[1][0]]
-#    cv2.imshow("ROI", roi)
-#    key = cv2.waitKey(0)
-#    if key == ord('s'):
-#        cv2.imwrite( output_dir + "/" + input_files[0], roi)
-
-
-#input_files = os.listdir(args.dir)
-#for current_file in os.listdir(args.dir):
-#    current_image = cv2.imread( args.dir + current_file, cv2.IMREAD_COLOR)
-#    cv2.imshow('test', current_image)
-#    key = cv2.waitKey(0)
-#    if key == ord('q'):
-#        break
